@@ -1,7 +1,6 @@
 package com.example.odatav4.service;
 
 import com.example.odatav4.data.Storage;
-import com.example.odatav4.servlet.DemoServlet;
 import org.apache.olingo.commons.api.edmx.EdmxReference;
 import org.apache.olingo.server.api.OData;
 import org.apache.olingo.server.api.ODataHttpHandler;
@@ -11,20 +10,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 @Service
-public class Odata4Service implements Serializable {
+public class Odata4Service extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger LOG = LoggerFactory.getLogger(DemoServlet.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Odata4Service.class);
 
-
+    @Override
     public void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         OData odata = OData.newInstance();
         ServiceMetadata edm = odata.createServiceMetadata(new DemoEdmProvider(), new ArrayList<EdmxReference>());
