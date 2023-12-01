@@ -17,7 +17,7 @@
     <properties>
         <java.version>1.8</java.version>
         <javax.version>2.5</javax.version>
-        <odata.version>4.6.0</odata.version>
+        <odata.version>4.9.0</odata.version>
 <!--        <slf4j.version>1.7.7</slf4j.version>-->
     </properties>
     <dependencies>
@@ -51,24 +51,24 @@
         <dependency>
             <groupId>org.apache.olingo</groupId>
             <artifactId>odata-server-api</artifactId>
-            <version>4.6.0</version>
+            <version>4.9.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.olingo</groupId>
             <artifactId>odata-server-core</artifactId>
-            <version>4.6.0</version>
+            <version>4.9.0</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.olingo</groupId>
             <artifactId>odata-commons-api</artifactId>
-            <version>4.6.0</version>
+            <version>4.9.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.olingo</groupId>
             <artifactId>odata-commons-core</artifactId>
-            <version>4.6.0</version>
+            <version>4.9.0</version>
         </dependency>
 
         <!--<dependency>

@@ -272,6 +272,11 @@ public class FilterExpressionVisitor implements ExpressionVisitor<Object> {
           HttpStatusCode.NOT_IMPLEMENTED.getStatusCode(), Locale.ENGLISH);
 	  }
 
+    @Override
+    public Object visitBinaryOperator(BinaryOperatorKind binaryOperatorKind, Object o, List<Object> list) throws ExpressionVisitException, ODataApplicationException {
+        return null;
+    }
+
     public Object visitLambdaExpression(String lambdaFunction, String lambdaVariable, Expression expression)
 	      throws ExpressionVisitException, ODataApplicationException {
 	    throw new ODataApplicationException("Lamdba expressions are not implemented", 

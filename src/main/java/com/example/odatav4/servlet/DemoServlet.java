@@ -26,24 +26,26 @@ import org.apache.olingo.server.api.ODataHttpHandler;
 import org.apache.olingo.server.api.ServiceMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "DemoServlet", urlPatterns = "/demo")
-public class DemoServlet extends HttpServlet {
+@RestController
+public class DemoServlet extends DispatcherServlet {
 
   private static final long serialVersionUID = 1L;
   private static final Logger LOG = LoggerFactory.getLogger(DemoServlet.class);
 
 
-  @Override
+  @RequestMapping(value = "/test/*")
   protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     OData odata = OData.newInstance();
     ServiceMetadata edm = odata.createServiceMetadata(new DemoEdmProvider(), new ArrayList<EdmxReference>());
@@ -65,7 +67,17 @@ public class DemoServlet extends HttpServlet {
       handler.register(new DemoBatchProcessor(storage));
 
       // let the handler do the work
-      handler.process(req, resp);
+      handler.process(new HttpServletRequestWrapper(req) {
+        // Spring MVC matches the whole path as the servlet path
+        // Olingo wants just the prefix, ie upto /odata, so that it
+        // can parse the rest of it as an OData path. So we need to override
+        // getServletPath()
+        @Override
+        public String getServletPath() {
+          return "/test";
+        }
+      }, resp);
+
     } catch (RuntimeException e) {
       LOG.error("Server Error occurred in ExampleServlet", e);
       throw new ServletException(e);
